@@ -127,10 +127,9 @@ A list of Google Dorks for Bug Bounty, Web Application Security, and Pentesting
 > site:example.com ext:log | ext:txt | ext:conf | ext:cnf | ext:ini | ext:env | ext:sh | ext:bak | ext:backup | ext:swp | ext:old | ext:~ | ext:git | ext:svn | ext:htpasswd | ext:htaccess
 
 ### 32. SENSITIVE INFORMATION
-> site:example.com ext:doc | ext:docx intext:confidential
+> site:example.com ext:doc | ext:docx intext:"internal use only | confidential"
 
-> site:example.com ext:pdf intext:confidential
-
+> site:example.com ext:pdf intext:"internal use only | confidential"
 ### 33. ENDPOINTS
 > site:example.com inurl:&
 ---
