@@ -26,6 +26,11 @@ A list of Google Dorks for Bug Bounty, Web Application Security, and Pentesting
 
 > site:example.com ext:jspx inurl:?
 
+### 33. ENDPOINTS
+> site:example.com inurl:=
+
+> site:example.com inurl:&
+
 ### 2. FORM
 > site:example.com intitle:"Submit Feedback" | intitle:"Contact us" | intitle:"Join Our Waitlist" | intitle:"Subscribe" | intitle:"Newsletter" | intitle:"Unsubscribe" | intitle:"Email Support" | intitle:"Customer Support"
 
@@ -130,6 +135,4 @@ A list of Google Dorks for Bug Bounty, Web Application Security, and Pentesting
 > site:example.com ext:doc | ext:docx intext:"internal use only | confidential"
 
 > site:example.com ext:pdf intext:"internal use only | confidential"
-### 33. ENDPOINTS
-> site:example.com inurl:&
 ---
