@@ -18,9 +18,9 @@ A list of Google Dorks for Bug Bounty, Web Application Security, and Pentesting
 
 > site:example.com ext:php inurl:?
 
-> site:example.com ext:asp inurl:?
-
 > site:example.com ext:aspx inurl:?
+
+> site:example.com ext:asp inurl:?
 
 > site:example.com ext:jsp inurl:?
 
