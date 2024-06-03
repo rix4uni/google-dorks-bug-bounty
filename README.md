@@ -42,6 +42,8 @@ A list of Google Dorks for Bug Bounty, Web Application Security, and Pentesting
 ### 3. PORTS
 > site:example.com inurl:"8443/login.jsp"
 
+> site:example.com:8888
+
 ### 4. UPLOAD
 > site:example.com "choose file"
 
