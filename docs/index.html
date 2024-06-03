@@ -7,8 +7,8 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-/*             max-width: 800px; */
-/*            margin: 0 auto;*/
+            max-width: 800px;
+            margin: 0 auto;
             background-color: #212121;
             color: #f0f0f0;
             padding: 20px;
@@ -23,17 +23,19 @@
         }
         input {
             font-size: 1em;
-            padding: 5px;
+            padding: 10px;
             margin-left: 5px;
+            border-radius: 7px;
         }
         button {
             font-size: 1em;
             background-color: #4CAF50;
             color: white;
             border: none;
-            padding: 6px 12px;
+            padding: 10px 12px;
             cursor: pointer;
             margin-left: 5px;
+            border-radius: 7px;
         }
         button:hover {
             background-color: #45a049;
@@ -83,24 +85,12 @@
 <body>
     <h1>Google Dorks for Bug Bounty</h1>
     <p>
-        <a href="https://twitter.com/rix4uni" target="_blank">
-            <img src="https://img.shields.io/twitter/url/https/twitter.com/rix4uni.svg?style=social&label=Follow%20%40rix4uni" alt="Twitter Follow Badge">
-        </a>
         <a href="https://github.com/rix4uni/google-dorks-bug-bounty/" target="_blank">GitHub Repo</a><br><br>
     </p>
     <label for="domainInput">Enter a domain:</label>
     <input type="text" id="domainInput" placeholder="example.com">
     <button id="updateDomainButton">Update Domain</button>
     <ul id="dorkList"></ul>
-    <section>
-        <h2>Additional Resources</h2>
-        <ul class="link-list">
-            <li><a href="https://github.com/rix4uni/google-dorks-bug-bounty/" target="_blank">Google Dorks For Bug Bounty</a></li>
-            <li><a href="https://thegrayarea.tech/5-google-dorks-every-hacker-needs-to-know-fed21022a906" target="_blank">5 Google Dorks Every Hacker Needs to Know</a></li>
-            <li><a href="https://infosecwriteups.com/uncover-hidden-gems-in-the-cloud-with-google-dorks-8621e56a329d" target="_blank">Uncover Hidden Gems in the Cloud with Google Dorks</a></li>
-            <li><a href="https://infosecwriteups.com/10-google-dorks-for-sensitive-data-9454b09edc12" target="_blank">10 Google Dorks for Sensitive Data</a></li>
-        </ul>
-    </section>
     <script>
         let originalDorks = [];
 
