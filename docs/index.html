@@ -8,7 +8,6 @@
         body {
             font-family: Arial, sans-serif;
             max-width: 800px;
-            margin: 0 auto;
             background-color: #212121;
             color: #f0f0f0;
             padding: 20px;
@@ -78,14 +77,6 @@
         ul.link-list li {
             margin-bottom: 10px;
         }
-        .dork-section {
-            display: none;
-        }
-        @media (min-width: 1366px) {
-            .dork-section {
-                display: block;
-            }
-        }
     </style>
 </head>
 <body>
@@ -99,7 +90,7 @@
     <label for="domainInput">Enter a domain:</label>
     <input type="text" id="domainInput" placeholder="example.com">
     <button id="updateDomainButton">Update Domain</button>
-    <div id="dorkSections"></div>
+    <ul id="dorkList"></ul>
     <section>
         <h2>Additional Resources</h2>
         <ul class="link-list">
@@ -111,16 +102,14 @@
     </section>
     <script>
         let originalDorks = [];
-        const sections = [
-            { title: "PHP|ASP|ASPX|JSP|JSPX EXTENSION WITH PARAMETERS", dorks: [] },
-            { title: "ENDPOINTS", dorks: [] }
-        ];
+        let dorksByCategory = {};
 
         async function fetchDorks() {
             const url = "https://raw.githubusercontent.com/rix4uni/google-dorks-bug-bounty/main/README.md";
             const response = await fetch(url);
             const text = await response.text();
 
+            const dorkList = document.getElementById("dorkList");
             const regex = /(?:^### (.+)|^> (.+))/gm;
             let match;
             let title = '';
@@ -128,51 +117,30 @@
 
             while ((match = regex.exec(text)) !== null) {
                 if (match[1]) {
+                    // Title match
                     title = match[1];
+                    dorksByCategory[title] = [];
                 } else {
+                    // Dork match
                     if (firstDork) {
                         firstDork = false;
                         continue;
                     }
                     const dork = match[2];
                     originalDorks.push(dork);
-
-                    if (title.includes("EXTENSION")) {
-                        sections[0].dorks.push({ dork, title });
-                    } else {
-                        sections[1].dorks.push({ dork, title });
-                    }
+                    dorksByCategory[title].push(dork);
                 }
             }
-            renderDorkSections();
-        }
 
-        function renderDorkSections() {
-            const dorkSections = document.getElementById("dorkSections");
-            sections.forEach(section => {
-                const sectionDiv = document.createElement("div");
-                sectionDiv.classList.add("dork-section");
-
-                const sectionTitle = document.createElement("h2");
-                sectionTitle.textContent = section.title;
-                sectionDiv.appendChild(sectionTitle);
-
-                const dorkList = document.createElement("ul");
-                section.dorks.forEach(({ dork, title }) => {
-                    const listItem = createDorkListItem(dork, title);
-                    dorkList.appendChild(listItem);
-                });
-
-                sectionDiv.appendChild(dorkList);
-                dorkSections.appendChild(sectionDiv);
-            });
+            for (const [title, dorks] of Object.entries(dorksByCategory)) {
+                const listItem = createDorkListItem(dorks, title);
+                dorkList.appendChild(listItem);
+            }
         }
 
         let prevTitle = '';
 
-        function createDorkListItem(dork, description) {
-            const googleLink = `https://www.google.com/search?q=${encodeURIComponent(dork)}`;
-
+        function createDorkListItem(dorks, description) {
             const listItem = document.createElement("li");
 
             if (description && description !== prevTitle) {
@@ -183,16 +151,20 @@
                 prevTitle = description;
             }
 
-            const link = document.createElement("a");
-            link.href = googleLink;
-            link.textContent = dork;
-            link.classList.add("dorkLink");
-            link.target = "_blank";
-            link.addEventListener("click", () => {
-                link.classList.add("clicked");
-            });
+            dorks.forEach(dork => {
+                const googleLink = `https://www.google.com/search?q=${encodeURIComponent(dork)}`;
+                const link = document.createElement("a");
+                link.href = googleLink;
+                link.textContent = dork;
+                link.classList.add("dorkLink");
+                link.target = "_blank";
+                link.addEventListener("click", () => {
+                    link.classList.add("clicked");
+                });
 
-            listItem.appendChild(link);
+                listItem.appendChild(link);
+                listItem.appendChild(document.createTextNode("    "));
+            });
 
             return listItem;
         }
@@ -207,13 +179,20 @@
             dorkLinks.forEach((link, index) => {
                 let originalDork = originalDorks[index];
                 
+                // For site:example.com
                 if (/site:"?example\[?\.\]?com"?/i.test(originalDork)) {
                     const joinedDomains = domains.map(d => `site:${d}`).join(" | ");
                     originalDork = originalDork.replace(/site:"?example\[?\.\]?com"?/gi, joinedDomains);
-                } else if (/["']example\[?\.\]?com["']/i.test(originalDork)) {
+                }
+                
+                // For "example.com"
+                else if (/["']example\[?\.\]?com["']/i.test(originalDork)) {
                     const joinedDomains = domains.map(d => `"${d}"`).join(" | ");
                     originalDork = originalDork.replace(/["']example\[?\.\]?com["']/gi, joinedDomains);
-                } else if (originalDork.includes('intext:"example.com"')) {
+                }
+                
+                // For intext:"example.com"
+                else if (originalDork.includes('intext:"example.com"')) {
                     const joinedDomains = domains.map(d => `intext:"${d}"`).join(" | ");
                     originalDork = originalDork.replace(/intext:"example\.com"/gi, joinedDomains);
                 }
@@ -222,7 +201,7 @@
                 
                 link.textContent = originalDork;
                 link.href = updatedLink;
-                link.classList.remove("clicked");
+                link.classList.remove("clicked"); // Reset the color
             });
         }
 
