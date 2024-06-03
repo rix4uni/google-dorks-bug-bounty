@@ -45,8 +45,16 @@
         }
         li {
             margin-bottom: 10px;
-            flex: 1 1 45%;
-            padding: 5px;
+            width: 50%;
+        }
+        .dork-item {
+            display: flex;
+            justify-content: space-between;
+        }
+        .dork-links {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
         }
         a {
             text-decoration: none;
@@ -146,6 +154,7 @@
 
         function createDorkListItem(dorks, description) {
             const listItem = document.createElement("li");
+            listItem.classList.add("dork-item");
 
             if (description && description !== prevTitle) {
                 const desc = document.createElement("p");
@@ -155,7 +164,11 @@
                 prevTitle = description;
             }
 
-            const dorkContainer = document.createElement("div");
+            const dorkContainer1 = document.createElement("div");
+            dorkContainer1.classList.add("dork-links");
+
+            const dorkContainer2 = document.createElement("div");
+            dorkContainer2.classList.add("dork-links");
 
             dorks.forEach((dork, index) => {
                 const googleLink = `https://www.google.com/search?q=${encodeURIComponent(dork)}`;
@@ -168,15 +181,15 @@
                     link.classList.add("clicked");
                 });
 
-                if (index % 2 === 0 && index !== 0) {
-                    dorkContainer.appendChild(document.createElement("br"));
+                if (index % 2 === 0) {
+                    dorkContainer1.appendChild(link);
+                } else {
+                    dorkContainer2.appendChild(link);
                 }
-
-                dorkContainer.appendChild(link);
-                dorkContainer.appendChild(document.createTextNode("    "));
             });
 
-            listItem.appendChild(dorkContainer);
+            listItem.appendChild(dorkContainer1);
+            listItem.appendChild(dorkContainer2);
 
             return listItem;
         }
