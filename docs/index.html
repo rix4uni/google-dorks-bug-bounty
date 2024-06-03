@@ -8,6 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             max-width: 800px;
+/*            margin: 0 auto;*/
             background-color: #212121;
             color: #f0f0f0;
             padding: 20px;
@@ -40,21 +41,9 @@
         ul {
             list-style-type: none;
             padding: 0;
-            display: flex;
-            flex-wrap: wrap;
         }
         li {
             margin-bottom: 10px;
-            width: 50%;
-        }
-        .dork-item {
-            display: flex;
-            justify-content: space-between;
-        }
-        .dork-links {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
         }
         a {
             text-decoration: none;
@@ -114,7 +103,6 @@
     </section>
     <script>
         let originalDorks = [];
-        let dorksByCategory = {};
 
         async function fetchDorks() {
             const url = "https://raw.githubusercontent.com/rix4uni/google-dorks-bug-bounty/main/README.md";
@@ -131,7 +119,6 @@
                 if (match[1]) {
                     // Title match
                     title = match[1];
-                    dorksByCategory[title] = [];
                 } else {
                     // Dork match
                     if (firstDork) {
@@ -140,21 +127,18 @@
                     }
                     const dork = match[2];
                     originalDorks.push(dork);
-                    dorksByCategory[title].push(dork);
+                    const listItem = createDorkListItem(dork, title);
+                    dorkList.appendChild(listItem);
                 }
-            }
-
-            for (const [title, dorks] of Object.entries(dorksByCategory)) {
-                const listItem = createDorkListItem(dorks, title);
-                dorkList.appendChild(listItem);
             }
         }
 
         let prevTitle = '';
 
-        function createDorkListItem(dorks, description) {
+        function createDorkListItem(dork, description) {
+            const googleLink = `https://www.google.com/search?q=${encodeURIComponent(dork)}`;
+
             const listItem = document.createElement("li");
-            listItem.classList.add("dork-item");
 
             if (description && description !== prevTitle) {
                 const desc = document.createElement("p");
@@ -164,32 +148,16 @@
                 prevTitle = description;
             }
 
-            const dorkContainer1 = document.createElement("div");
-            dorkContainer1.classList.add("dork-links");
-
-            const dorkContainer2 = document.createElement("div");
-            dorkContainer2.classList.add("dork-links");
-
-            dorks.forEach((dork, index) => {
-                const googleLink = `https://www.google.com/search?q=${encodeURIComponent(dork)}`;
-                const link = document.createElement("a");
-                link.href = googleLink;
-                link.textContent = dork;
-                link.classList.add("dorkLink");
-                link.target = "_blank";
-                link.addEventListener("click", () => {
-                    link.classList.add("clicked");
-                });
-
-                if (index % 2 === 0) {
-                    dorkContainer1.appendChild(link);
-                } else {
-                    dorkContainer2.appendChild(link);
-                }
+            const link = document.createElement("a");
+            link.href = googleLink;
+            link.textContent = dork;
+            link.classList.add("dorkLink");
+            link.target = "_blank";
+            link.addEventListener("click", () => {
+                link.classList.add("clicked");
             });
 
-            listItem.appendChild(dorkContainer1);
-            listItem.appendChild(dorkContainer2);
+            listItem.appendChild(link);
 
             return listItem;
         }
