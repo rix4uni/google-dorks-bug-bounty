@@ -77,6 +77,8 @@ A list of Google Dorks for Bug Bounty, Web Application Security, and Pentesting
 ### 14. JENKINS
 > site:example.com intitle:"Dashboard [Jenkins]"
 
+> site:example.com intitle:"Sign in [Jenkins]" inurl:"login?from" 
+
 ### 15. WERKZEUG
 > site:example.com intitle:"Werkzeug"
 
