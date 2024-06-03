@@ -74,6 +74,8 @@ A list of Google Dorks for Bug Bounty, Web Application Security, and Pentesting
 ### 13. PHPLDAPADMIN
 > site:example.com intitle:"phpLDAPadmin"
 
+> site:example.com intitle:"phpLDAPadmin" inurl:cmd.php
+
 ### 14. JENKINS
 > site:example.com intitle:"Dashboard [Jenkins]"
 
