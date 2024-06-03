@@ -93,6 +93,8 @@ A list of Google Dorks for Bug Bounty, Web Application Security, and Pentesting
 ### 18. JOOMLA
 > site:example.com intext:"Joomla! - Open Source Content Management"
 
+> site:example.com site:*/joomla/administrator
+
 ### 19. EMAIL
 > site:example.com (filetype:doc OR filetype:xlsx) intext:@gmail.com
 
