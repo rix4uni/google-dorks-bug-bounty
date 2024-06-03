@@ -40,9 +40,13 @@
         ul {
             list-style-type: none;
             padding: 0;
+            display: flex;
+            flex-wrap: wrap;
         }
         li {
             margin-bottom: 10px;
+            flex: 1 1 45%;
+            padding: 5px;
         }
         a {
             text-decoration: none;
@@ -151,7 +155,9 @@
                 prevTitle = description;
             }
 
-            dorks.forEach(dork => {
+            const dorkContainer = document.createElement("div");
+
+            dorks.forEach((dork, index) => {
                 const googleLink = `https://www.google.com/search?q=${encodeURIComponent(dork)}`;
                 const link = document.createElement("a");
                 link.href = googleLink;
@@ -162,9 +168,15 @@
                     link.classList.add("clicked");
                 });
 
-                listItem.appendChild(link);
-                listItem.appendChild(document.createTextNode("    "));
+                if (index % 2 === 0 && index !== 0) {
+                    dorkContainer.appendChild(document.createElement("br"));
+                }
+
+                dorkContainer.appendChild(link);
+                dorkContainer.appendChild(document.createTextNode("    "));
             });
+
+            listItem.appendChild(dorkContainer);
 
             return listItem;
         }
