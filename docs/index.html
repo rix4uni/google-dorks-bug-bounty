@@ -194,11 +194,19 @@
                 
                 link.textContent = originalDork;
                 link.href = updatedLink;
+                link.classList.remove("clicked"); // Reset the color
             });
         }
 
         const updateDomainButton = document.getElementById("updateDomainButton");
         updateDomainButton.addEventListener("click", updateDomain);
+
+        const domainInput = document.getElementById("domainInput");
+        domainInput.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") {
+                updateDomain();
+            }
+        });
 
         fetchDorks();
     </script>
