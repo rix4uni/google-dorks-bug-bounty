@@ -52,6 +52,9 @@
         a:hover {
             text-decoration: underline;
         }
+        a.clicked {
+            color: #2196F3;
+        }
         p {
             margin: 0;
         }
@@ -82,8 +85,8 @@
     <p>
         <a href="https://twitter.com/rix4uni" target="_blank">
             <img src="https://img.shields.io/twitter/url/https/twitter.com/rix4uni.svg?style=social&label=Follow%20%40rix4uni" alt="Twitter Follow Badge">
-        <a href="https://github.com/rix4uni/google-dorks-bug-bounty/" target="_blank">GitHub Repo</a>
-        </a><br><br>
+        </a>
+        <a href="https://github.com/rix4uni/google-dorks-bug-bounty/" target="_blank">GitHub Repo</a><br><br>
     </p>
     <label for="domainInput">Enter a domain:</label>
     <input type="text" id="domainInput" placeholder="example.com">
@@ -150,6 +153,9 @@
             link.textContent = dork;
             link.classList.add("dorkLink");
             link.target = "_blank";
+            link.addEventListener("click", () => {
+                link.classList.add("clicked");
+            });
 
             listItem.appendChild(link);
 
